@@ -1,7 +1,10 @@
 RESPONSES to additonal questions asked.
 
 1 - What would you change if the list of keywords was much larger (several millions) ?
+    ANS: I will read into a database. Setup a 'cache' for the most recent suggestions returned to user(s).
 
 2 - What would you change if the requirements were to match any portion of the keywords
 (for example, given the string “pro”, the program could suggest the keyword “re​​pro​​be”) ?
+    ANS: I would have to redesign my 'suggestion' algorithm.
+		I will have to prioritize going through each branch till the leave to determine if the query string is found in a keyword
 
