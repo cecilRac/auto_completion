@@ -1,13 +1,14 @@
-const express = require('express');
-const cors = require('cors');
+import * as express from 'express';
+import * as cors from 'cors';
+
 // core module for handling dictionary operations
-const { get_suggestions, load_dictionary } = require('./core/dictionary');
+import { get_suggestions, load_dictionary } from './core/dictionary';
 
 load_dictionary('./src/keywords.txt');
 const app = express();
 app.use(cors());
 
-app.get('/:q', async (req, res) => {
+app.get('/:q', async (req: express.Request, res: express.Response): Promise <any> => {
     const { q } = req.params;
     let suggestions = []
     if (q === ' ' || !q || q === '') return res.json({suggestions})

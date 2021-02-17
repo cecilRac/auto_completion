@@ -1,18 +1,20 @@
-module.exports = class Tree {
+export default class Tree {
+    tree: Node;
+    suggestions: Suggestion [];
     constructor() {
-        this.tree = null;
-        this.suggestions = [];
-      }
+      this.tree = null;
+      this.suggestions = [];
+    }
 
-    newNode() {
+    newNode(): Node {
         return {
             isLeaf: false,
-            children: {},
+            children: {} ,
             frequency: 0
         }
     }
     // adding and keeping track of frequency of words
-    add(word) {
+    add(word): void {
         if (!this.tree) this.tree = this.newNode();
 
         let root = this.tree;
@@ -27,7 +29,7 @@ module.exports = class Tree {
     }
 
     // search exact match of text
-    find(word) {
+    find(word): Node {
         let root = this.tree;
         for (const letter of word) {
             if (letter in root.children) {
@@ -37,10 +39,10 @@ module.exports = class Tree {
         return root;
     }
     // recursive to find complete words(leaves) on a given branch
-    traverse(root, word) {
+    traverse(root, word):void {
         if (root.isLeaf) {
             this.push_sort_suggestions({word, freq: root.frequency});
-            return true;
+            return;
         }
 
         for (const letter in root.children) {
@@ -49,7 +51,7 @@ module.exports = class Tree {
     }
 
     // return <max> suggestions for search-word
-    suggest_match(word, max = 4) {
+    suggest_match(word, max = 4): Suggestion [] {
         const root = this.find(word);
         if (!root) return this.suggestions; // cannot suggest anything
 
@@ -61,9 +63,11 @@ module.exports = class Tree {
         return this.suggestions.slice(0, max);
     }
     // each possible suggestion is pushed and sorted
-    push_sort_suggestions({word, freq}) {
-        if (this.suggestions.length < 1) return this.suggestions.push({word, freq});
-
+    push_sort_suggestions({word, freq}): void {
+        if (this.suggestions.length < 1) {
+            this.suggestions.push({word, freq});
+            return;
+        }
         this.suggestions.push({word, freq});
         this.suggestions.sort((a,b) => {
             if(a.freq > b.freq) return -1;
@@ -72,11 +76,22 @@ module.exports = class Tree {
         })
     }
 
-    clear_suggestions() {
+    clear_suggestions(): void {
       this.suggestions = [];
     }
 
-    print() {
+    print(): void {
       console.log(this.tree)
     }
+}
+
+interface Node {
+    isLeaf: boolean,
+    children: {} ,
+    frequency: number
+}
+
+interface Suggestion {
+    word: string,
+    freq: number
 }
