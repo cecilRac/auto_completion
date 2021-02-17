@@ -3,6 +3,10 @@ TO RUN APP
 	npm i,
 	npm start => this starts the server.Using a browser or client like postman you can simulate a get request to the endpoint 'localhost:3000/<query string>'
 
+
+KEYWORDS:
+	keywords loaded for the sake of the challange was same as provided in pdf. it can be found in ./src/keywords.txt
+
 RESPONSES to additonal questions asked.
 
 1 - What would you change if the list of keywords was much larger (several millions) ?
