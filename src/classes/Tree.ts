@@ -1,12 +1,12 @@
 export default class Tree {
-    tree: node;
-    suggestions: suggestion [];
+    tree: Node;
+    suggestions: Suggestion [];
     constructor() {
       this.tree = null;
       this.suggestions = [];
     }
 
-    newNode(): node {
+    newNode(): Node {
         return {
             isLeaf: false,
             children: {} ,
@@ -29,7 +29,7 @@ export default class Tree {
     }
 
     // search exact match of text
-    find(word): node {
+    find(word): Node {
         let root = this.tree;
         for (const letter of word) {
             if (letter in root.children) {
@@ -51,7 +51,7 @@ export default class Tree {
     }
 
     // return <max> suggestions for search-word
-    suggest_match(word, max = 4): suggestion [] {
+    suggest_match(word, max = 4): Suggestion [] {
         const root = this.find(word);
         if (!root) return this.suggestions; // cannot suggest anything
 
@@ -85,13 +85,13 @@ export default class Tree {
     }
 }
 
-interface node {
+interface Node {
     isLeaf: boolean,
     children: {} ,
     frequency: number
 }
 
-interface suggestion {
+interface Suggestion {
     word: string,
     freq: number
 }

@@ -2,7 +2,7 @@
   "requires": true,
   "lockfileVersion": 1,
   "scripts": {
-    "start": "nodemon src/index.js"
+    "start": "npx ts-node-dev --respawn src/index.ts"
   },
   "dependencies": {
     "@types/cors": "^2.8.10",
@@ -363,6 +363,7 @@
       "resolved": "https://registry.npmjs.org/toidentifier/-/toidentifier-1.0.0.tgz",
       "version": "1.0.0"
     },
+    "ts-node-dev": "^1.1.1",
     "tty": {
       "integrity": "sha1-5ECayYsN0cULWf846G6sPwdk7kU=",
       "resolved": "https://registry.npmjs.org/tty/-/tty-1.0.1.tgz",
