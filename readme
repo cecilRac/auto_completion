@@ -1,7 +1,7 @@
 TO RUN APP
 	git clone,
 	npm i,
-	npm start => this starts the server and using a browser or client like postman you can simulate a get requst on the endpoint 'localhost:3000/<query string>
+	npm start => this starts the server.Using a browser or client like postman you can simulate a get request to the endpoint 'localhost:3000/<query string>'
 
 RESPONSES to additonal questions asked.
 
