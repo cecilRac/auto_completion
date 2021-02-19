@@ -1,9 +1,7 @@
 export default class Tree {
     tree: Node;
-    suggestions: Suggestion [];
     constructor() {
       this.tree = null;
-      this.suggestions = [];
     }
 
     newNode(): Node {
@@ -14,7 +12,7 @@ export default class Tree {
         }
     }
     // adding and keeping track of frequency of words
-    add(word): void {
+    add(word: string): void {
         if (!this.tree) this.tree = this.newNode();
 
         let root = this.tree;
@@ -29,7 +27,7 @@ export default class Tree {
     }
 
     // search exact match of text
-    find(word): Node {
+    find(word: string): Node {
         let root = this.tree;
         for (const letter of word) {
             if (letter in root.children) {
@@ -39,45 +37,41 @@ export default class Tree {
         return root;
     }
     // recursive to find complete words(leaves) on a given branch
-    traverse(root, word):void {
+    traverse(root: Node, word: string, array: Suggestion []): Suggestion[] {
         if (root.isLeaf) {
-            this.push_sort_suggestions({word, freq: root.frequency});
-            return;
+            array.push({word, freq: root.frequency});
+            return array;
         }
 
         for (const letter in root.children) {
-            this.traverse(root.children[letter], word + letter);
+            this.traverse(root.children[letter], word + letter, array);
         }
     }
 
     // return <max> suggestions for search-word
-    suggest_match(word, max = 4): Suggestion [] {
+    suggest_match(word: string, max: number = 4): Suggestion [] {
+        let suggestion_array : Suggestion [] = [];
         const root = this.find(word);
-        if (!root) return this.suggestions; // cannot suggest anything
+        if (!root) return suggestion_array; // cannot suggest anything
 
         const children = root.children;
-
         for (const letter in children) {
-            this.traverse(children[letter], word + letter);
+           this.traverse(children[letter], word + letter, suggestion_array);
         }
-        return this.suggestions.slice(0, max);
+
+        suggestion_array = this.sort_suggestions(suggestion_array);
+        return suggestion_array.slice(0, max);
     }
+
     // each possible suggestion is pushed and sorted
-    push_sort_suggestions({word, freq}): void {
-        if (this.suggestions.length < 1) {
-            this.suggestions.push({word, freq});
-            return;
-        }
-        this.suggestions.push({word, freq});
-        this.suggestions.sort((a,b) => {
+    sort_suggestions(array: Suggestion []): Suggestion [] {
+        if (array.length < 2) return array;
+
+        return array.sort((a,b) => {
             if(a.freq > b.freq) return -1;
             else if(a.freq < b.freq) return 1;
             return 0;
         })
-    }
-
-    clear_suggestions(): void {
-      this.suggestions = [];
     }
 
     print(): void {
