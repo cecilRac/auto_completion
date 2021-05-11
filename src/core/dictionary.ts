@@ -5,7 +5,7 @@ import Tree from '../classes/Tree' ;
 const dictionary =  new Tree;
 
 // read keywords from <file> into memory
-export const load_dictionary = (file): void => {
+export const load_dictionary = (file: string): void => {
     let words = fs.readFileSync(file, 'utf8').split('\n')
     words.map(word => dictionary.add(word.toLowerCase()))
 
